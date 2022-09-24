@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Kokpit tramwaju</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+    <p><span>Prędkość: </span><span id="Speed"> -- </span></p>
+    <p><span>Temperatura: </span><span id="Temperature"> -- </span></p>
+    <p><span>Masa: </span><span id="Weight"> -- </span></p>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/3.1.7/signalr.min.js"></script>
+    <script>
+        const apiBaseUrl = 'https://kl-function.azurewebsites.net';
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl(apiBaseUrl + '/api')
+            .configureLogging(signalR.LogLevel.Information)
+            .build();
+        connection.on('newMessage', (message) => {
+            document.getElementById(message.sensor_name).innerHTML = message.sensor_value;
+        });
+
+        connection.start()
+            .catch(console.error);
+    </script>
+</body>
+</html>
