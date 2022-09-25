@@ -5,12 +5,13 @@ param location string = deployment().location
 @description('Provide a prefix. Use only lower case letters and numbers.')
 param prefix string
 
-var storageName = '${prefix}tramworkshop'
-var functionName = '${prefix}-tram-workshop-function'
-var eventHubName = '${prefix}-tram-workshop-event-hub'
+var appInsightsName = '${prefix}-tram-ai'
+var eventHubName = '${prefix}-tram-event-hub'
+var functionAppName = '${prefix}-tram-function'
+var hostingPlanName = '${prefix}-tram-plan'
+var publicIpName = '${prefix}-tram-pip'
+var storageAccountName = '${prefix}tramstg'
 var vmName = '${prefix}-tram-vm'
-var networkSecutityGropuName = '${prefix}-tram-workshop-nsg'
-var appInsightsName = '${prefix}-tram-workshop-ai'
 
 targetScope = 'subscription'
 
@@ -24,7 +25,7 @@ module storageModule 'modules/storage.bicep' = {
   scope: rg
   params: {
     location: location
-    name: storageName
+    name: storageAccountName
   }
 }
 
@@ -37,10 +38,39 @@ module vmModule 'modules/vm.bicep' = {
     dnsLabelPrefix: 'mytestdnsname'
     location: location
     OSVersion: '2022-datacenter'
+    prefix: prefix
     publicIPAllocationMethod: 'Dynamic'
-    publicIpName: 'web01'
+    publicIpName: publicIpName
     publicIpSku: 'Basic'
+    storageAccountName : storageAccountName
     vmName: vmName
     vmSize: 'Standard_D3_v2'
   }
+  dependsOn: [
+    storageModule
+  ]
+}
+
+module eventHubModule 'modules/eventhub.bicep' = {
+  name: 'eventHubDeployment'
+  scope: rg
+  params: {
+    location: location
+    name: eventHubName
+  }
+}
+
+module functionModule 'modules/function.bicep' = {
+  name: 'functionDeployment'
+  scope: rg
+  params: {
+    functionAppName: functionAppName
+    appInsightsName: appInsightsName
+    hostingPlanName: hostingPlanName
+    location: location
+    storageAccountName: storageAccountName
+  }
+  dependsOn: [
+    storageModule, eventHubModule
+  ]
 }

@@ -1,4 +1,5 @@
 param location string = resourceGroup().location
+
 @minLength(3)
 @maxLength(24)
 @description('Provide a prefix. Use only lower case letters and numbers.')

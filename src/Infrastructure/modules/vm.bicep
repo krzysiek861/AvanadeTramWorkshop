@@ -97,24 +97,26 @@ param vmSize string = 'Standard_D2s_v5'
 @description('Location for all resources.')
 param location string = resourceGroup().location
 
+@description('Name of the storage account.')
+param storageAccountName string = 'simplestg'
+
 @description('Name of the virtual machine.')
 param vmName string = 'simple-vm'
 
-var storageAccountName = 'bootdiags${uniqueString(resourceGroup().id)}'
-var nicName = 'myVMNic'
+@minLength(3)
+@maxLength(6)
+@description('Prefix for other dependent resources. Use only lower case letters and numbers.')
+param prefix string = 'xyz'
+
+var nicName = '${prefix}-tram-nic'
 var addressPrefix = '10.0.0.0/16'
 var subnetName = 'Subnet'
 var subnetPrefix = '10.0.0.0/24'
-var virtualNetworkName = 'MyVNET'
-var networkSecurityGroupName = 'default-NSG'
+var virtualNetworkName = '${prefix}-tram-vnet'
+var networkSecurityGroupName = '${prefix}-tram-nsg'
 
-resource stg 'Microsoft.Storage/storageAccounts@2021-04-01' = {
+resource storageAccount 'Microsoft.Storage/storageAccounts@2021-04-01' existing = {
   name: storageAccountName
-  location: location
-  sku: {
-    name: 'Standard_LRS'
-  }
-  kind: 'Storage'
 }
 
 resource pip 'Microsoft.Network/publicIPAddresses@2021-02-01' = {
@@ -240,7 +242,7 @@ resource vm 'Microsoft.Compute/virtualMachines@2021-03-01' = {
     diagnosticsProfile: {
       bootDiagnostics: {
         enabled: true
-        storageUri: stg.properties.primaryEndpoints.blob
+        storageUri: storageAccount.properties.primaryEndpoints.blob
       }
     }
   }
