@@ -71,8 +71,16 @@ resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
           value: applicationInsights.properties.InstrumentationKey
         }
         {
+          name: 'AzureSignalRConnectionString'
+          value: 'Endpoint=https://tramcockpit.service.signalr.net;AccessKey='
+        }
+        {
           name: 'AzureWebJobsStorage'
           value: 'DefaultEndpointsProtocol=https;AccountName=${storageAccountName};AccountKey=${storageAccount.listKeys().keys[0].value}'
+        }
+        {
+          name: 'EventHubConnectionString'
+          value: 'Endpoint='
         }
         {
           name: 'WEBSITE_CONTENTAZUREFILECONNECTIONSTRING'
@@ -98,8 +106,14 @@ resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
       cors: {
         allowedOrigins: [
           'https://portal.azure.com'
+          'https://tramcockpit.z6.web.${environment().suffixes.storage}'
         ]
+        supportCredentials: true
       }
+      ftpsState: 'AllAllowed'
+      http20Enabled: false
+      managedPipelineMode: 'Integrated'
+      use32BitWorkerProcess: true
     }
     httpsOnly: true
   }

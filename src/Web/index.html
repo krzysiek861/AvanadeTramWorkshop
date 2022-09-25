@@ -2,6 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kokpit tramwaju</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
@@ -11,7 +12,7 @@
     <p><span>Masa: </span><span id="Weight"> -- </span></p>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/3.1.7/signalr.min.js"></script>
     <script>
-        const apiBaseUrl = 'https://kl-function.azurewebsites.net';
+        const apiBaseUrl = 'https://mypref-tram-function.azurewebsites.net';
         const connection = new signalR.HubConnectionBuilder()
             .withUrl(apiBaseUrl + '/api')
             .configureLogging(signalR.LogLevel.Information)
