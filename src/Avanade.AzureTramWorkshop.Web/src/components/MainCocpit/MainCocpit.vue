@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import SpeedSensor from './SpeedSensor/SpeedSensor.vue';
 import Params from './Params/Params.vue';
+import Tram from './Tram/Tram.vue';
 </script>
 
 <template>
@@ -14,7 +15,9 @@ import Params from './Params/Params.vue';
                     <Params></Params>
                 </div>
             </div>
-            <div class="tram"></div>
+            <div class="tram">
+                <Tram></Tram>
+            </div>
         </div>
     </div>
 </template>

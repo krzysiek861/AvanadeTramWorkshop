@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import MainCocpit from "./components/MainCocpit/MainCocpit.vue";
+import MemeGenerator from "./components/MemeGenerator/MemeGenerator.vue";
+import RightPanel from "./components/RightPanel/RightPanel.vue";
 </script>
 
 <template>
@@ -8,9 +10,13 @@ import MainCocpit from "./components/MainCocpit/MainCocpit.vue";
             <div class="main-cocpit">
                 <MainCocpit></MainCocpit>
             </div>
-            <div class="meme-generator"></div>
+            <div class="meme-generator">
+                <MemeGenerator></MemeGenerator>
+            </div>
         </div>
-        <div class="second-column"></div>
+        <div class="second-column">
+            <RightPanel></RightPanel>
+        </div>
     </div>
 </template>
 
@@ -37,6 +43,8 @@ import MainCocpit from "./components/MainCocpit/MainCocpit.vue";
     height: 204px;
     width: 1537px;
     background-image: url('./assets/img/MEME_GENERATOR_BG.png');
+    display: flex;
+    justify-content: center;
 }
 
 .second-column {

@@ -11,6 +11,7 @@ import Batteries from './Batteries/Batteries.vue';
             <Batteries></Batteries>
             <ParamsList></ParamsList>
         </div>
+        <div class="params-lines"></div>
     </div>
 </template>
 
@@ -18,6 +19,16 @@ import Batteries from './Batteries/Batteries.vue';
 .params-content {
     display: flex;
     flex-direction: column;
+    position: relative;
+}
+
+.params-lines {
+    position: absolute;
+    background-image: url('@/assets/img/lines.png');
+    width: 451px;
+    height: 430px;
+    top: 85px;
+    left: -280px;
 }
 
 .params-row {
