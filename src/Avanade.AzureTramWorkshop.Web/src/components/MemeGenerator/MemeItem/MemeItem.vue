@@ -15,7 +15,7 @@ import DiodeOff from "../../shared/Icons/DiodeOff.vue";
 <style scoped>
     .meme-content {
         height: 70px;
-        width: 150px;
+        width: 155px;
         display: flex;
         flex-direction: column;
         justify-content: space-evenly;

@@ -6,7 +6,7 @@
     .temperatures-content {
         background-image: url('@/assets/img/TEMPERATURA.png');
         width: 359px;
-        height: 418px;
+        height: 273px;
         margin-top: 4px;
     }
 </style>

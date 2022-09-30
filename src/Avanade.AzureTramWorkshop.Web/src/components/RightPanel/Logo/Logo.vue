@@ -5,8 +5,8 @@
 <style scoped>
     .logo-content {
         background-image: url('@/assets/img/PLAKIETKA_LOGO.png');
-        width: 349px;
-        height: 251px;
+        width: 361px;
+        height: 212px;
         margin-top: 16px;
     }
 </style>
