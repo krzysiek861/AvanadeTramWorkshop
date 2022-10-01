@@ -14,7 +14,7 @@ namespace Avanade.AzureTramWorkshop.Functions
 {
     public static class EventProcessor
     {
-        private const string TRAM_SPEED_TAG = "Speed";
+        private const string TRAM_SPEED = "Speed";
         private const string TRAM_ENGINE_TEMPERATURE = "Temperature";
         private const string TRAM_WEIGHT = "Weight";
 
@@ -31,16 +31,46 @@ namespace Avanade.AzureTramWorkshop.Functions
             [EventHubTrigger("tram-speed-hub", Connection = "EventHubConnectionString")] EventData[] events, ILogger log,
             [SignalR(HubName = "serverless")] IAsyncCollector<SignalRMessage> signalRMessages)
         {
-            var exceptions = new List<Exception>();
-            var values = new List<int>();
+            var values = await ProcessEvents(events, log);
+            var average = values.Select(x => int.Parse(x)).Sum() / values.Count;
 
-            foreach (EventData eventData in events)
+            await signalRMessages.AddAsync(SignalRMessageHelper.CreateMessage(TRAM_SPEED, average.ToString()));
+        }
+
+        [FunctionName("AverageEngineTemperature")]
+        public static async Task AverageEngineTemperature(
+            [EventHubTrigger("engine-temperature-hub", Connection = "EventHubConnectionString")] EventData[] events, ILogger log,
+            [SignalR(HubName = "serverless")] IAsyncCollector<SignalRMessage> signalRMessages)
+        {
+            var values = await ProcessEvents(events, log);
+            var average = values.Select(x => int.Parse(x)).Sum() / values.Count;
+
+            await signalRMessages.AddAsync(SignalRMessageHelper.CreateMessage(TRAM_ENGINE_TEMPERATURE, average.ToString()));
+        }
+
+        [FunctionName("MaxTramWeight")]
+        public static async Task MaxTramWeight(
+            [EventHubTrigger("tram-weight-hub", Connection = "EventHubConnectionString")] EventData[] events, ILogger log,
+            [SignalR(HubName = "serverless")] IAsyncCollector<SignalRMessage> signalRMessages)
+        {
+            var values = await ProcessEvents(events, log);
+            var max = values.Select(x => int.Parse(x)).Max();
+
+            await signalRMessages.AddAsync(SignalRMessageHelper.CreateMessage(TRAM_WEIGHT, max.ToString()));
+        }
+
+        private static async Task<List<string>> ProcessEvents(EventData[] events, ILogger log)
+        {
+            var exceptions = new List<Exception>();
+            var values = new List<string>();
+
+            foreach (var eventData in events)
             {
                 try
                 {
                     // Replace these two lines with your processing logic.
                     log.LogInformation($"{DateTime.UtcNow} - C# Event Hub trigger function processed a message: {eventData.EventBody}");
-                    values.Add(int.Parse(eventData.EventBody.ToString()));
+                    values.Add(eventData.EventBody.ToString());
                     await Task.Yield();
                 }
                 catch (Exception e)
@@ -51,16 +81,18 @@ namespace Avanade.AzureTramWorkshop.Functions
                 }
             }
 
-            var average = values.Sum() / values.Count;
             // Once processing of the batch is complete, if any messages in the batch failed processing throw an exception so that there is a record of the failure.
-
             if (exceptions.Count > 1)
+            {
                 throw new AggregateException(exceptions);
+            }
 
             if (exceptions.Count == 1)
+            {
                 throw exceptions.Single();
+            }
 
-            await signalRMessages.AddAsync(SignalRMessageHelper.CreateMessage(TRAM_SPEED_TAG, average.ToString()));
+            return values;
         }
     }
 }

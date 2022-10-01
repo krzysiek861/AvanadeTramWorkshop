@@ -9,24 +9,22 @@ namespace Avanade.AzureTramWorkshop.Common
         // connection string to the Event Hubs namespace
         private const string connectionString = "";
 
-        // name of the event hub
-        private const string eventHubName = "tram-speed-hub";
-
         // The Event Hubs client types are safe to cache and use as a singleton for the lifetime
         // of the application, which is best practice when events are being published or read regularly.
-        static readonly EventHubProducerClient producerClient = new(connectionString, eventHubName);
+        private readonly EventHubProducerClient producerClient;
 
         private readonly TSensor sensor;
 
         public MessageSender(TSensor sensor)
         {
             this.sensor = sensor;
+            producerClient = new(connectionString, sensor.EventHubName);
         }
 
         public async Task Run()
         {
             // Create a batch of events 
-            using EventDataBatch eventBatch = await producerClient.CreateBatchAsync();
+            using var eventBatch = await producerClient.CreateBatchAsync();
 
             var sensorValues = await sensor.GenerateValues();
 

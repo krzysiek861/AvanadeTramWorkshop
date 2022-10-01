@@ -1,17 +1,16 @@
 ﻿using Avanade.AzureTramWorkshop.Common;
 
-namespace Avanade.AzureTramWorkshop.EngineTemperatureSensor
+namespace Avanade.AzureTramWorkshop.WeightSensor
 {
     internal class Sensor : ISensor
     {
-        // number of events to be sent to the event hub
         private const int numOfEvents = 25;
 
-        private const string configName = "EngineTemperatureSensor";
+        private const string configName = "WeightSensor";
 
         private readonly ConfigurationReader<Configuration> configurationReader = new();
 
-        public string EventHubName { get; } = "engine-temperature-hub";
+        public string EventHubName { get; } = "tram-weight-hub";
 
         public async Task<IEnumerable<string>> GenerateValues()
         {
