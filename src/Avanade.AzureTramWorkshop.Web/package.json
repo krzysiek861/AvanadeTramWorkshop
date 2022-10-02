@@ -10,9 +10,11 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
-    "vue": "^3.2.38"
+    "vue": "^3.2.38",
+    "vuex": "^4.0.2"
   },
   "devDependencies": {
+    "@aspnet/signalr": "^1.0.27",
     "@rushstack/eslint-patch": "^1.1.4",
     "@types/node": "^16.11.56",
     "@vitejs/plugin-vue": "^3.0.3",

@@ -1,7 +1,23 @@
 <script setup lang="ts">
+import store from './store';
+import { HubConnectionBuilder, LogLevel } from '@aspnet/signalr'
 import MainCocpit from "./components/MainCocpit/MainCocpit.vue";
 import MemeGenerator from "./components/MemeGenerator/MemeGenerator.vue";
 import RightPanel from "./components/RightPanel/RightPanel.vue";
+
+const connection = new HubConnectionBuilder()
+    .withUrl('')
+    .configureLogging(LogLevel.Information)
+    .build();
+connection.start();
+connection.on('newMessage', (message) => {
+    if (message.sensor_name === 'Weight') {
+        store.dispatch('weight/updateWeight', message.sensor_value);
+    } else if (message.sensor_name === 'Speed') {
+        store.dispatch('speed/updateTramSpeed',message.sensor_value)
+    }
+});
+
 </script>
 
 <template>

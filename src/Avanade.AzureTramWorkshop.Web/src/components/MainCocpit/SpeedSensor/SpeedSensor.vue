@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import { computed } from "@vue/reactivity";
-import { ref } from "vue";
+import store from "@/store";
 import SpeedArrow from "./Icons/SpeedArrow.vue";
 
 const speedToDegreesBy5 = [-20, -5, 10, 23, 35.5, 50, 62, 77, 90.5, 105, 119];
 
-const speed = ref(32);
 const arrowRotation = computed(() => {
-    const index = Math.floor(speed.value / 5);
-    const remainder = speed.value % 5;
+    const index = Math.floor(store.getters['speed/tramSpeed'] / 5);
+    const remainder = store.getters['speed/tramSpeed'] % 5;
     const speedChangeFactor = remainder / 5;
     return remainder > 0
         ? `${speedToDegreesBy5[index] + ((speedToDegreesBy5[index + 1] - speedToDegreesBy5[index]) * speedChangeFactor)}deg`
@@ -20,7 +19,7 @@ const arrowRotation = computed(() => {
 <template>
     <div class="speed-sensor-content">
         <img src="@/assets/img/PREDKOSC.png">
-        <div class="speed-value">{{ speed }}</div>
+        <div class="speed-value">{{ store.getters['speed/tramSpeed'] }}</div>
         <div class="speed-arrow" :style="{rotate: arrowRotation}">
             <div class="arrow">
                 <SpeedArrow></SpeedArrow>
