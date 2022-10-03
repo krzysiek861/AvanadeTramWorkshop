@@ -37,6 +37,11 @@ connection.on('newMessage', (message) => {
 </template>
 
 <style scoped>
+@font-face {
+    font-family: 'Digital 7 Mono';
+    src: url('@/assets/font/digital-7-mono.ttf');
+}
+
 .main {
     display: flex;
     flex-direction: row;

@@ -13,22 +13,27 @@ import DiodeOff from "../../shared/Icons/DiodeOff.vue";
 </template>
 
 <style scoped>
-    .meme-content {
-        height: 70px;
-        width: 155px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-evenly;
-        align-items: center;
-    }
+.meme-content {
+    height: 95px;
+    width: 155px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
 
-    .meme-content .label {
-        height: 35px;
-        text-align: center;
-    }
+.meme-content .label {
+    height: 35px;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    color: #858A90;
+    text-transform: uppercase;
+}
 
-    .meme-content .icon {
-        width: 21px;
-        height: 21px;
-    }
+.meme-content .icon {
+    width: 21px;
+    height: 21px;
+}
 </style>

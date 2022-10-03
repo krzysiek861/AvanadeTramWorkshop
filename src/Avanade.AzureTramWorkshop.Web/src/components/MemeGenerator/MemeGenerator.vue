@@ -26,6 +26,7 @@ export default {
     display: flex;
     flex-direction: row;
     align-items: end;
+    position: relative;
 }
 
 .meme-item {
@@ -34,5 +35,26 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: absolute;
+}
+
+.meme-item:nth-of-type(1) {
+    left: 55px;
+}
+
+.meme-item:nth-of-type(2) {
+    left: calc(55px + 297px);
+}
+
+.meme-item:nth-of-type(3) {
+    left: calc(55px + 2*297px);
+}
+
+.meme-item:nth-of-type(4) {
+    left: calc(55px + 3*297px);
+}
+
+.meme-item:nth-of-type(5) {
+    left: calc(55px + 4*297px - 1px);
 }
 </style>
