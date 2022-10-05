@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import WheelsSpeedMask from "./Icons/WheelsSpeedMask.vue";
+import DiodeOff from "../../shared/Icons/DiodeOff.vue";
+import WheelsSpeedArrow from "./Icons/WheelsSpeedArrow.vue";
 
 </script>
 
@@ -8,9 +10,17 @@ import WheelsSpeedMask from "./Icons/WheelsSpeedMask.vue";
         <div class="mask">
             <WheelsSpeedMask></WheelsSpeedMask>
         </div>
+        <div class="arrow-content">
+            <div class="arrow">
+                <WheelsSpeedArrow></WheelsSpeedArrow>
+            </div>
+        </div>
         <div class="wheels-speed-value">
             <span class="background">000</span>
             <span class="value">10</span>
+        </div>
+        <div class="wheels-slip">
+            <DiodeOff></DiodeOff>
         </div>
     </div>
 </template>
@@ -29,6 +39,7 @@ import WheelsSpeedMask from "./Icons/WheelsSpeedMask.vue";
     display: flex;
     justify-content: center;
     top: 109px;
+    z-index: 2;
 }
 
 .wheels-speed-value {
@@ -42,6 +53,14 @@ import WheelsSpeedMask from "./Icons/WheelsSpeedMask.vue";
     line-height: 58px;
     font-size: 58px;
     letter-spacing: 7px;
+}
+
+.wheels-slip {
+    position: absolute;
+    width: 21px;
+    height: 21px;
+    bottom: 12px;
+    right: 12px;
 }
 
 .wheels-speed-value span {
@@ -58,4 +77,17 @@ import WheelsSpeedMask from "./Icons/WheelsSpeedMask.vue";
     right: -3px;
 }
 
+.arrow-content {
+    display: flex;
+    justify-content: center;
+    width: 359px;
+    height: 32px;
+    position: absolute;
+    top: 121px;
+    z-index: 1;
+}
+
+.arrow-content .arrow {
+    width: 190px;
+}
 </style>
