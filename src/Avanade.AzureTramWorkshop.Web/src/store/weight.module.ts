@@ -6,7 +6,7 @@ export default {
     getters: {
         weightInTons: function (state : any) {
             // Change kilograms to tons.
-            return state.weight / 1000;
+            return (state.weight / 1000).toFixed(1);
         }
     },
     mutations: {

@@ -1,32 +1,35 @@
 <script setup lang="ts">
-import DiodeOff from "../../shared/Icons/DiodeOff.vue";</script>
+import store from "@/store";
+import DiodeOff from "../../shared/Icons/DiodeOff.vue";
+import DiodeOn from "../../shared/Icons/DiodeOn.vue";
+</script>
 
 <template>
     <div class="temperatures-content">
         <div class="engine-temperature">
-            <div class="temperature-gradient"></div>
+            <div class="temperature-gradient" :style="{ 'width': store.getters['temperature/engineGradientWidth'] + 'px' }"></div>
             <div class="temperature-value">
                 <span class="background">000</span>
-                <span class="value">0</span>
+                <span class="value">{{ store.getters['temperature/engine'] }}</span>
             </div>
         </div>
         <div class="inverter-temperature">
-            <div class="temperature-gradient"></div>
+            <div class="temperature-gradient" :style="{ 'width': store.getters['temperature/inverterGradientWidth'] + 'px' }"></div>
             <div class="temperature-value">
                 <span class="background">000</span>
-                <span class="value">0</span>
+                <span class="value">{{ store.getters['temperature/inverter'] }}</span>
             </div>
         </div>
         <div class="air-temperature">
-            <div class="temperature-gradient"></div>
+            <div class="temperature-gradient" :style="{ 'width': store.getters['temperature/airGradientWidth'] + 'px' }"></div>
             <div class="temperature-value">
                 <span class="background">000</span>
-                <span class="value">0</span>
+                <span class="value">{{ store.getters['temperature/air'] }}</span>
             </div>
         </div>
         <div class="heating-cooling-diode">
             <div class="heating">
-                <DiodeOff></DiodeOff>
+                <DiodeOn></DiodeOn>
             </div>
             <div class="cooling">
                 <DiodeOff></DiodeOff>
@@ -71,9 +74,24 @@ import DiodeOff from "../../shared/Icons/DiodeOff.vue";</script>
 }
 
 .temperature-gradient {
+    box-sizing: border-box;
+    border: solid 4px;
+    border-radius: 4px;
     width: 232px;
     height: 26px;
-    margin: 5px
+    margin: 5px;
+}
+
+.air-temperature .temperature-gradient {
+    background-image: url('@/assets/img/air-temperature-gradient.svg');
+}
+
+.engine-temperature .temperature-gradient {
+    background-image: url('@/assets/img/engine-temperature-gradient.svg');
+}
+
+.inverter-temperature .temperature-gradient {
+    background-image: url('@/assets/img/inverter-temperature-gradient.svg');
 }
 
 .temperature-value {

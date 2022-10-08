@@ -1,9 +1,29 @@
 export default {
     namespaced: true,
     state: {
-        air: 20,
-        engine: 50,
-        inverter: 35
+        air: 0,
+        engine: 0,
+        inverter: 0
+    },
+    getters: {
+        air : function (state: any) {
+            return state.air;
+        },
+        airGradientWidth: function (state: any) {
+            return calculateGradient(-5, 30, state.air);
+        },
+        engine: function (state: any) {
+            return state.engine;
+        },
+        engineGradientWidth: function (state: any) {
+            return calculateGradient(50, 130, state.engine);
+        },
+        inverter : function (state: any) {
+            return state.inverter;
+        },
+        inverterGradientWidth: function (state: any) {
+            return calculateGradient(20, 80, state.inverter);
+        }
     },
     mutations: {
         UPDATE_AIR_TEMPERATURE(state : any, payload : number) {
@@ -27,4 +47,18 @@ export default {
             context.commit('UPDATE_INVERTER_TEMPERATURE', payload)
         }
     }
+}
+
+function calculateGradient(min: number, max: number, value: number) : number {
+    const minWidthPx = 10;
+    const maxWidthPx = 233;
+    const width = maxWidthPx - (maxWidthPx * (max - value) / (max - min));
+    
+    if (width < minWidthPx) {
+        return minWidthPx;
+    } else if (width > maxWidthPx) {
+        return maxWidthPx;
+    }
+
+    return width;
 }

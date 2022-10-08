@@ -15,6 +15,8 @@ connection.on('newMessage', (message) => {
         store.dispatch('weight/updateWeight', message.sensor_value);
     } else if (message.sensor_name === 'Speed') {
         store.dispatch('speed/updateTramSpeed',message.sensor_value)
+    } else if (message.sensor_name === 'Temperature') {
+        store.dispatch('temperature/updateEngineTemperature',message.sensor_value)
     }
 });
 

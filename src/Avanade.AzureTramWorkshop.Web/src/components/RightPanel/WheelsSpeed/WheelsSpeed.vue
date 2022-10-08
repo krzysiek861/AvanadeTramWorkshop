@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import WheelsSpeedMask from "./Icons/WheelsSpeedMask.vue";
+import store from "@/store";
 import DiodeOff from "../../shared/Icons/DiodeOff.vue";
+import DiodeOn from "../../shared/Icons/DiodeOn.vue";
+import WheelsSpeedMask from "./Icons/WheelsSpeedMask.vue";
 import WheelsSpeedArrow from "./Icons/WheelsSpeedArrow.vue";
-
 </script>
 
 <template>
@@ -11,16 +12,17 @@ import WheelsSpeedArrow from "./Icons/WheelsSpeedArrow.vue";
             <WheelsSpeedMask></WheelsSpeedMask>
         </div>
         <div class="arrow-content">
-            <div class="arrow">
+            <div class="arrow" :style="{rotate: store.getters['speed/wheelSpeedArrow']}">
                 <WheelsSpeedArrow></WheelsSpeedArrow>
             </div>
         </div>
         <div class="wheels-speed-value">
             <span class="background">000</span>
-            <span class="value">10</span>
+            <span class="value">{{ store.getters['speed/wheelSpeed'] }}</span>
         </div>
         <div class="wheels-slip">
-            <DiodeOff></DiodeOff>
+            <DiodeOn v-if="store.getters['speed/isSlip']" ></DiodeOn>
+            <DiodeOff v-else ></DiodeOff>
         </div>
     </div>
 </template>
