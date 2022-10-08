@@ -1,12 +1,14 @@
 <script setup lang="ts">
+import store from "@/store";
 import DiodeOff from "../../shared/Icons/DiodeOff.vue";
-
+import DiodeOn from "../../shared/Icons/DiodeOn.vue";
 </script>
 
 <template>
     <div class="smoke-sensor-content">
         <div class="smoke-diode">
-            <DiodeOff></DiodeOff>
+            <DiodeOn v-if="store.getters['other/smoke']" ></DiodeOn>
+            <DiodeOff v-else ></DiodeOff>
         </div>
     </div>
 </template>

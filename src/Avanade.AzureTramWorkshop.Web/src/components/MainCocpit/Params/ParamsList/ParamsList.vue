@@ -3,11 +3,10 @@ import store from "@/store";
 </script>
 <template>
     <div class="params-list-content">
-        <div class="param-value"><span class="background">000</span><span class="value">000</span></div>
-        <div class="param-value"><span class="background">000</span><span class="value">0</span></div>
-        <div class="param-value"><span class="background">000</span><span class="value">00</span></div>
-        <div class="param-value"><span class="background">000</span><span class="value">{{
-        store.getters['weight/weightInTons'] }}</span></div>
+        <div class="param-value"><span class="background">000</span><span class="value">{{ store.getters['parameters/powerConsumption'] }}</span></div>
+        <div class="param-value"><span class="background">000</span><span class="value">{{ store.getters['parameters/batteryVoltage'] }}</span></div>
+        <div class="param-value"><span class="background">000</span><span class="value">{{ store.getters['parameters/tractionVoltage'] }}</span></div>
+        <div class="param-value"><span class="background">000</span><span class="value">{{ store.getters['parameters/weightInTons'] }}</span></div>
     </div>
 </template>
 

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import store from "@/store";
 import PantographRed from "./Icons/PantographRed.vue";
 import TramRed from "./Icons/TramRed.vue";
 import Lightning from "./Icons/Lightning.vue";
@@ -9,10 +10,12 @@ import PantographGreen from "./Icons/PantographGreen.vue";
 
 <template>
     <div class="tram-content">
-        <PantographGreen></PantographGreen>
-        <TramGreen></TramGreen>
+        <PantographGreen v-if="store.getters['parameters/tractionVoltage']"></PantographGreen>
+        <PantographRed v-else ></PantographRed>
+        <TramGreen v-if="store.getters['parameters/batteryVoltage']"></TramGreen>
+        <TramRed v-else></TramRed>
         <div class="lightning">
-            <Lightning></Lightning>
+            <Lightning v-if="store.getters['other/light']"></Lightning>
         </div>
     </div>
 </template>

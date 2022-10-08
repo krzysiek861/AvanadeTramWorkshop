@@ -1,0 +1,11 @@
+export const TRAM_SPEED = 'Speed';
+export const WHEEL_SPEED = 'Wheel_Speed';
+export const ENGINE_TEMPERATURE = 'Temperature';
+export const INVERTER_TEMPERATURE = 'Inverter_Temperature';
+export const AIR_TEMPERATURE = 'Air_Temperature';
+export const TRACTION_VOLTAGE = 'Traction';
+export const BATTERY_VOLTAGE = 'Battery';
+export const CURRENT_CONSUMPTION = 'Current';
+export const TRAM_WEIGHT = 'Weight';
+export const BLACKOUT_SENSOR = 'Blackout';
+export const SMOKE_SENSOR = 'Smoke';

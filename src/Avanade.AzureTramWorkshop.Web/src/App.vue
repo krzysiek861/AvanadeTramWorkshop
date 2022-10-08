@@ -4,6 +4,7 @@ import { HubConnectionBuilder, LogLevel } from '@aspnet/signalr'
 import MainCocpit from "./components/MainCocpit/MainCocpit.vue";
 import MemeGenerator from "./components/MemeGenerator/MemeGenerator.vue";
 import RightPanel from "./components/RightPanel/RightPanel.vue";
+import { ENGINE_TEMPERATURE, TRAM_SPEED, TRAM_WEIGHT } from './consts';
 
 const connection = new HubConnectionBuilder()
     .withUrl('')
@@ -11,12 +12,15 @@ const connection = new HubConnectionBuilder()
     .build();
 connection.start();
 connection.on('newMessage', (message) => {
-    if (message.sensor_name === 'Weight') {
-        store.dispatch('weight/updateWeight', message.sensor_value);
-    } else if (message.sensor_name === 'Speed') {
+    if (message.sensor_name === TRAM_WEIGHT) {
+        store.dispatch('parameters/updateWeight', message.sensor_value)
+        store.dispatch('meme/unlockAchievement', TRAM_WEIGHT)
+    } else if (message.sensor_name === TRAM_SPEED) {
         store.dispatch('speed/updateTramSpeed',message.sensor_value)
-    } else if (message.sensor_name === 'Temperature') {
+        store.dispatch('meme/unlockAchievement', TRAM_SPEED)
+    } else if (message.sensor_name === ENGINE_TEMPERATURE) {
         store.dispatch('temperature/updateEngineTemperature',message.sensor_value)
+        store.dispatch('meme/unlockAchievement', ENGINE_TEMPERATURE)
     }
 });
 
