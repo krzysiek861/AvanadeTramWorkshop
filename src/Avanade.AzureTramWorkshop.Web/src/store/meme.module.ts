@@ -1,27 +1,22 @@
 export default {
     namespaced: true,
     state: {
+        config: [1, 3, 5, 7, 10],
+        filePrefix: 'Krakow',
+        items: []
     },
     getters: {
-        isFirstUnlocked : function (state: any) {
-            return state.length > 1
+        getFileName: (state: any) => (index: number) => {
+            return `${state.filePrefix}_${index}.jpg`;
         },
-        isSecondUnlocked : function (state: any) {
-            return state.length > 3
-        },
-        isThirdUnlocked : function (state: any) {
-            return state.length > 5
-        },
-        isFourthUnlocked : function (state: any) {
-            return state.length > 7
-        },
-        isFithtUnlocked : function (state: any) {
-            return state.length > 10
-        },
+        isIndexUnlocked: (state: any) => (index: number) => {
+            return state.items.length > state.config[index]
+        }
     },
     mutations: {
         UPDATE_ACHIEVEMENT(state : any, payload : number) {
-            state[payload] = true
+            if (!state.items.includes(payload))
+                state.items.push(payload);
         }
     },
     actions : {

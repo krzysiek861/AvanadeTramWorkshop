@@ -1,13 +1,27 @@
 <script setup lang="ts">
+import { watch } from "vue";
+import store from "@/store";
 import DiodeOff from "../../shared/Icons/DiodeOff.vue";
+import DiodeOn from "../../shared/Icons/DiodeOn.vue"
 
+const props = defineProps({
+    index: Number,
+    label: String,
+})
+
+const emits = defineEmits(['onDiodeClick'])
+
+watch(() => store.getters['meme/isIndexUnlocked'](props.index), () => {
+    emits('onDiodeClick');
+})
 </script>
 
 <template>
     <div class="meme-content">
-        <div class="label">Great job!</div>
+        <div class="label">{{ label }}</div>
         <div class="icon">
-            <DiodeOff></DiodeOff>
+            <DiodeOn v-if="store.getters['meme/isIndexUnlocked'](index)" @click="$emit('onDiodeClick')" class="link"></DiodeOn>
+            <DiodeOff v-else></DiodeOff>
         </div>
     </div>
 </template>
@@ -35,5 +49,9 @@ import DiodeOff from "../../shared/Icons/DiodeOff.vue";
 .meme-content .icon {
     width: 21px;
     height: 21px;
+}
+
+.link {
+    cursor: pointer;
 }
 </style>

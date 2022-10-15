@@ -1,19 +1,42 @@
 <script lang="ts">
+import store from "@/store";
 import MemeItem from "./MemeItem/MemeItem.vue";
+import Modal from "../shared/Modal.vue";
 export default {
     data() {
         return {
-            memes: [{}, {}, {}, {}, {}]
+            memes: [
+                { label: "Good work!" },
+                { label: "Fantastic!" },
+                { label: "Well done!" },
+                { label: "Awesome!" },
+                { label: "Unbelievable!" }
+            ],
+            index: 0,
+            isModalVisible: false,
         }
     },
-    components: { MemeItem }
+    methods: {
+        closeModal() {
+            this.isModalVisible = false;
+        },
+        showModal(index:number) {
+            this.index = index;
+            this.isModalVisible = true;
+        },
+        getFileName() {
+            return store.getters['meme/getFileName'](this.index);
+        }
+    },
+    components: { MemeItem, Modal }
 }
 </script>
 
 <template>
+    <Modal v-show="isModalVisible" @close="closeModal()" :file="getFileName()" />
     <div class="meme-generator-content">
-        <div v-for="meme in memes" class="meme-item">
-            <MemeItem></MemeItem>
+        <div v-for="(item, index) in memes" v-bind:key="index" class="meme-item">
+            <MemeItem :label="item.label" :index="index" v-on:on-diode-click="showModal(index)"></MemeItem>
         </div>
     </div>
 </template>
