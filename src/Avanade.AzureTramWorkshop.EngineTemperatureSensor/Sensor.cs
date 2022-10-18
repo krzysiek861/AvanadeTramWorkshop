@@ -5,7 +5,7 @@ namespace Avanade.AzureTramWorkshop.EngineTemperatureSensor
     internal class Sensor : ISensor
     {
         // number of events to be sent to the event hub
-        private const int numOfEvents = 25;
+        private const int numOfEvents = 10;
 
         private const string configName = "EngineTemperatureSensor";
 

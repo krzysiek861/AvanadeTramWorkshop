@@ -4,7 +4,7 @@ namespace Avanade.AzureTramWorkshop.WeightSensor
 {
     internal class Sensor : ISensor
     {
-        private const int numOfEvents = 25;
+        private const int numOfEvents = 10;
 
         private const string configName = "WeightSensor";
 
